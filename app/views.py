@@ -1,6 +1,6 @@
 from app import app,db
 from flask import request,render_template, flash, redirect, url_for,g
-from .models import User, RegistrationForm, LoginForm, ContainerForm
+from .models import User, RegistrationForm, LoginForm, ContainerForm,GameOneRound,GameOneSelection,GameOneScore
 from flask_login import current_user, login_user, logout_user,login_required
 from app import login_manager
 import random
@@ -136,6 +136,41 @@ def inicio():
         bolita_elegida=bolitas_nombres[int(rand_contenedor.data)]
         print("Contenedor {}".format(contenedor_random))
         print("Bola elegida {}".format(bolita_elegida))
+        print("El usuario actual es {}".format(current_user.username))
+
+        ### Generamos los insert
+        # Ronda actual
+        ronda_actual = GameOneRound.query.filter_by(username=current_user.username).count()
+        ronda_actual += 1
+        ronda_actual_insert = GameOneRound(current_user.username, ronda_actual)
+        db.session.add(ronda_actual_insert)
+        db.session.commit()
+
+        # Seleccion del juego
+        for contenedor in contenedores:
+            name_container = contenedores_nombres[contenedor.name]
+            contenedor_insert = GameOneSelection(current_user.username,ronda_actual,name_container,contenedor.data)
+            db.session.add(contenedor_insert)
+            db.session.commit()
+
+        # Resultado del contenedor seleccionado
+        name_container_score = rand_contenedor.name
+        bola_elegida_score = int(rand_contenedor.data)
+        print("#######################")
+        print(current_user.username)
+        print(ronda_actual)
+        print(name_container_score)
+        print(bola_elegida_score)
+        print(recompensa)
+        
+        contenedor_score_insert = GameOneScore(current_user.username,
+                                    ronda_actual,
+                                    name_container_score,
+                                    bola_elegida_score,
+                                    recompensa)
+
+        db.session.add(contenedor_score_insert)
+        db.session.commit()
 
         return render_template('index.html', contenedor_random=contenedor_random , bolita_elegida = bolita_elegida,bolita_random=bolita_random , recompensa=recompensa)
 
