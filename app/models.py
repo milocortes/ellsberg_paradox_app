@@ -69,6 +69,43 @@ class GameOneScore(db.Model):
         self.bet = bet
         self.score = score
 
+class GameTwoRound(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100))
+    round = db.Column(db.Integer)
+
+    def __init__(self, username,round):
+        self.username = username
+        self.round = round
+
+class GameTwoSelection(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100))
+    round = db.Column(db.Integer)
+    containername = db.Column(db.String(20))
+    bet = db.Column(db.Integer)
+
+    def __init__(self, username,round,containername,bet):
+        self.username = username
+        self.round = round
+        self.containername = containername
+        self.bet = bet
+
+class GameTwoScore(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100))
+    round = db.Column(db.Integer)
+    containername = db.Column(db.String(20))
+    bet = db.Column(db.Integer)
+    score = db.Column(db.Integer)
+
+    def __init__(self, username,round,containername,bet,score):
+        self.username = username
+        self.round = round
+        self.containername = containername
+        self.bet = bet
+        self.score = score
+
 class RegistrationForm(FlaskForm):
     username = StringField('Username', [InputRequired()])
     password = PasswordField(
