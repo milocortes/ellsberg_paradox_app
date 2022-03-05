@@ -1,0 +1,35 @@
+#### POSTGRESQL
+### Crear la base de datos y usuario en PostgreSQL
+
+# Accedemos a la cli de PostgreSQL sin cambiar de cuenta
+sudo -iu postgres psql
+
+# Creamos la base de datos del proyecto
+CREATE DATABASE ellsberg_db;
+
+# Creamos un usuario para la bd del proyecto
+CREATE USER ellsberg_user WITH PASSWORD 'ellsberg_user';
+
+# Damos privilegios de administrador al usuario
+GRANT ALL PRIVILEGES ON DATABASE ellsberg_db TO ellsberg_user;
+
+#### FLASK
+# Instalar Flask
+conda install -c anaconda flask
+
+# Instalar flask-wtf
+pip install flask-wtf
+
+# Instalar psycopg2
+pip install psycopg2-binary
+
+# Instalar SQLAlchemy
+pip install Flask-SQLAlchemy
+
+# Instalar Flask-Migrate
+pip install Flask-Migrate
+
+# Instalar Flask-Login
+pip3 install Flask-Login
+
+https://stackabuse.com/using-sqlalchemy-with-flask-and-postgresql/
