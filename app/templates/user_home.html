@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block container %}
+  <h1>Welcome to the Ellsberg Paradox Test</h1>
+  {% if current_user.is_authenticated %}
+    <h3>Hey {{ current_user.username }}!!</h3>
+
+    <br>
+    {% if round_total_one < 6 %}
+    <a class="btn btn-primary btn-lg" href="{{ url_for('gameone') }}" role="button" id="aparatura">Game 1</a>
+
+    {% else %}
+    <p class="font-weight-bold">Game 1 over</p>
+
+    {% endif %}
+
+    {% if round_total_two < 6 %}
+    <a class="btn btn-primary btn-lg" href="{{ url_for('gametwo') }}" role="button" id="aparatura">Game 2</a>
+
+    {% else %}
+    <p class="font-weight-bold">Game 2 over</p>
+
+    {% endif %}
+
+    <br>
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Game 1 results</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Round</th>
+                <th scope="col">Container</th>
+                <th scope="col">Bet</th>
+                <th scope="col">Reward</th>
+              </tr>
+            </thead>
+            <tbody>
+          {% for i in result_score_one %}
+                    <tr>
+                      <td>{{ i.round }}</td>
+                      <td>{{ i.containername }}</td>
+                      <td>{{ i.bet }}</td>
+                      <td>{{ i.score }}</td>
+                    </tr>
+
+          {% endfor %}
+        </tbody>
+        </table>
+        <p class="font-weight-bold">Total reward {{score_total_one}}/60</p>
+
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-6">
+          <h2>Game 2 results</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Round</th>
+                <th scope="col">Container</th>
+                <th scope="col">Bet</th>
+                <th scope="col">Reward</th>
+              </tr>
+            </thead>
+            <tbody>
+          {% for i in result_score_two %}
+                    <tr>
+                      <td>{{ i.round }}</td>
+                      <td>{{ i.containername }}</td>
+                      <td>{{ i.bet }}</td>
+                      <td>{{ i.score }}</td>
+                    </tr>
+
+          {% endfor %}
+        </tbody>
+        </table>
+        <p class="font-weight-bold">Total reward {{score_total_two}}/60</p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+    </div> <!-- /container -->
+    <a href="{{ url_for('logout') }}">Click here to logout</a>
+
+  {% endif %}
+
+
+{% endblock %}

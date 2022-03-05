@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Paradoja de Ellberg</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer/">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+    <!-- Custom styles for this template -->
+    <link href="sticky-footer.css" rel="stylesheet">
+
+    <!-- Ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- jquery -->
+
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+
+    <link rel="stylesheet" href="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1569006288/BBBootstrap/choices.min.css?version=7.0.0">
+    <script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1569006273/BBBootstrap/choices.min.js?version=7.0.0"></script>
+    <style>
+    .product-form {
+        display: none;
+    }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Begin page content -->
+    <main role="main" class="container">
+      <br>
+    </main>
+    <div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">Paradoja de Ellberg</h1>
+      <p class="lead">El experimento consiste en .. .</p>
+      <hr class="my-4">
+
+    </div>
+    </div>
+
+      <div class="container p-3 my-3 border border-primary">
+        <p>Contenedor seleccionado de forma aleatoria : {{contenedor_random}}</p>
+        <p>Bola elegida por el usuario : {{ bolita_elegida }} </p>
+        <p>Bola elegida al azar : {{ bolita_random }} </p>
+        <p>Recompensa : {{recompensa}} </p>
+        <p>Recompensa acumulada: {{score_total}} </p>
+        <p>Rondas jugadas: {{ronda}} </p>
+
+        <h2> Tabla</h2>
+        <form method="POST"
+            action="\gameone"
+            role="form">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Contenedor</th>
+              <th scope="col">Red numbers</th>
+              <th scope="col">Blue numbers</th>
+              <th scope="col">Green numbers</th>
+              <th scope="col">Bet</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>9</td>
+              <td>13</td>
+              <td>14</td>
+              <td>
+                  <select class="custom-select custom-select-lg mb-2" id="containerOne" name="containerOne" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="1">Red</option>
+                    <option value="2">Blue</option>
+                    <option value="3">Green </option>
+                  </select>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>10</td>
+              <td>13</td>
+              <td>13</td>
+              <td>
+                  <select class="custom-select custom-select-lg mb-2" id="containerTwo" name="containerTwo" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="1">Red</option>
+                    <option value="2">Blue</option>
+                    <option value="3">Green </option>
+                  </select>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>11</td>
+              <td>13</td>
+              <td>12</td>
+              <td>
+                  <select class="custom-select custom-select-lg mb-2" id="containerThree" name="containerThree" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="1">Red</option>
+                    <option value="2">Blue</option>
+                    <option value="3">Green </option>
+                  </select>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td>12</td>
+              <td>13</td>
+              <td>11</td>
+              <td>
+                  <select class="custom-select custom-select-lg mb-2" id="containerFour" name="containerFour" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="1">Red</option>
+                    <option value="2">Blue</option>
+                    <option value="3">Green </option>
+                  </select>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td>13</td>
+              <td>13</td>
+              <td>10</td>
+              <td>
+                  <select class="custom-select custom-select-lg mb-2" id="containerFive" name="containerFive" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="1">Red</option>
+                    <option value="2">Blue</option>
+                    <option value="3">Green </option>
+                  </select>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">6</th>
+              <td>14</td>
+              <td>13</td>
+              <td>9</td>
+              <td>
+                  <select class="custom-select custom-select-lg mb-2" id="containerSix" name="containerSix" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="1">Red</option>
+                    <option value="2">Blue</option>
+                    <option value="3">Green </option>
+                  </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-primary" type="submit">Submit form</button>
+
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Ellberg paradox test.</span>
+      </div>
+    </footer>
+  </body>
+
+
+</html>

@@ -1,12 +1,27 @@
 {% extends 'base.html' %}
 
 {% block container %}
-  <h1>Welcome to the Authentication Demo</h1>
+  <h1></h1>
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">Ellsberg Paradox Test.</h1>
+      <p><a class="btn btn-primary btn-lg" href="https://en.wikipedia.org/wiki/Ellsberg_paradox" role="button">Learn more &raquo;</a></p>
+    </div>
+  </div>
   {% if current_user.is_authenticated %}
     <h3>Hey {{ current_user.username }}!!</h3>
+    <br>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('gameone') }}" role="button" id="aparatura">Game 1</a>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('gametwo') }}" role="button" id="aparatura">Game 2</a>
+    <br>
     <a href="{{ url_for('logout') }}">Click here to logout</a>
   {% else %}
-  Click here to <a href="{{ url_for('login') }}">login</a> or <a href="{{ url_for('register') }}">register</a>
+  <br>
+  <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
+  <a class="btn btn-secondary btn-lg" href="{{ url_for('register') }}" role="button">Register</a>
+  <br>
+
   {% endif %}
 {% endblock %}
-  
