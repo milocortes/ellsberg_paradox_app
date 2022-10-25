@@ -19,7 +19,7 @@ def get_bolita_contenedor(contenedor,valor,game):
 
     valor_rojas_contenedores = {'containerOne':9,'containerTwo':10,'containerThree':11,'containerFour':12,'containerFive':13,'containerSix':14}
     valor_azules_contenedores = {'containerOne':13,'containerTwo':13,'containerThree':13,'containerFour':13,'containerFive':13,'containerSix':13}
-    valor_verdes_contenedores = {'containerOne':13,'containerTwo':13,'containerThree':12,'containerFour':11,'containerFive':10,'containerSix':9}
+    valor_verdes_contenedores = {'containerOne':14,'containerTwo':13,'containerThree':12,'containerFour':11,'containerFive':10,'containerSix':9}
 
     if game == "uno":
         R = valor_rojas_contenedores[contenedor]
