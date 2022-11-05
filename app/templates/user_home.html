@@ -6,7 +6,7 @@
     <h3>Hey {{ current_user.username }}!!</h3>
 
     <br>
-    {% if round_total_one < 6 %}
+    {% if round_total_one < 5 %}
     <a class="btn btn-primary btn-lg" href="{{ url_for('gameone') }}" role="button" id="aparatura">Game 1</a>
 
     {% else %}
@@ -14,11 +14,21 @@
 
     {% endif %}
 
-    {% if round_total_two < 6 %}
+    {% if round_total_two < 5 %}
     <a class="btn btn-primary btn-lg" href="{{ url_for('gametwo') }}" role="button" id="aparatura">Game 2</a>
 
     {% else %}
     <p class="font-weight-bold">Game 2 over</p>
+
+
+    {% endif %}
+
+    {% if round_total_three < 5 %}
+    <a class="btn btn-primary btn-lg" href="{{ url_for('gamethree') }}" role="button" id="aparatura">Game 3</a>
+
+    {% else %}
+    <p class="font-weight-bold">Game 3 over</p>
+
 
     {% endif %}
 
@@ -77,6 +87,32 @@
         </tbody>
         </table>
         <p class="font-weight-bold">Total reward {{score_total_two}}/60</p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-6">
+          <h2>Game 3 results</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Round</th>
+                <th scope="col">Container</th>
+                <th scope="col">Bet</th>
+                <th scope="col">Reward</th>
+              </tr>
+            </thead>
+            <tbody>
+          {% for i in result_score_three %}
+                    <tr>
+                      <td>{{ i.round }}</td>
+                      <td>{{ i.containername }}</td>
+                      <td>{{ i.bet }}</td>
+                      <td>{{ i.score }}</td>
+                    </tr>
+
+          {% endfor %}
+        </tbody>
+        </table>
+        <p class="font-weight-bold">Total reward {{score_total_three}}/60</p>
           <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
         </div>
       </div>

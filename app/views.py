@@ -1,6 +1,7 @@
 from app import app,db
 from flask import request,render_template, flash, redirect, url_for,g
-from .models import User, RegistrationForm, LoginForm, ContainerForm,GameOneRound,GameOneSelection,GameOneScore,GameTwoRound,GameTwoSelection,GameTwoScore
+#from .models import User, RegistrationForm, LoginForm, ContainerForm,GameOneRound,GameOneSelection,GameOneScore,GameTwoRound,GameTwoSelection,GameTwoScore
+from .models import *
 from flask_login import current_user, login_user, logout_user,login_required
 from app import login_manager
 import random
@@ -109,14 +110,15 @@ def login():
         login_user(existing_user)
         flash('You have successfully logged in.', 'success')
         #return redirect(url_for('inicio'))
-        result_score_one = GameOneScore.query.filter_by(username=username)
-        round_total_one = GameOneScore.query.filter_by(username=username).count()
+        result_score_one = GameOneScore.query.filter_by(username=current_user.username)
+        result_score_two = GameTwoScore.query.filter_by(username=current_user.username)
+        result_score_three = GameThreeScore.query.filter_by(username=current_user.username)
 
-        result_score_two = GameTwoScore.query.filter_by(username=username)
-        round_total_two = GameTwoScore.query.filter_by(username=username).count()
+        round_total_one = GameOneScore.query.filter_by(username=current_user.username).count()
+        round_total_two = GameTwoScore.query.filter_by(username=current_user.username).count()
+        round_total_three = GameThreeScore.query.filter_by(username=current_user.username).count()
 
         score_total_one = 0
-
         for r in result_score_one:
             score_total_one += r.score
 
@@ -124,7 +126,14 @@ def login():
         for r in result_score_two:
             score_total_two += r.score
 
-        return render_template('user_home.html',result_score_one = result_score_one,result_score_two = result_score_two,score_total_one=score_total_one,score_total_two=score_total_two,round_total_one=round_total_one,round_total_two=round_total_two)
+        score_total_three = 0
+        for r in result_score_three:
+            score_total_three += r.score
+
+
+        return render_template('user_home.html',result_score_one = result_score_one,result_score_two = result_score_two, result_score_three = result_score_three,
+                                                 score_total_one=score_total_one,score_total_two=score_total_two, score_total_three=score_total_three,
+                                                 round_total_one=round_total_one,round_total_two=round_total_two,round_total_three=round_total_three)
 
     if form.errors:
         flash(form.errors, 'danger')
@@ -147,7 +156,7 @@ def gameone():
         # Ronda actual
         ronda_actual = GameOneRound.query.filter_by(username=current_user.username).count()
 
-        if ronda_actual<6:
+        if ronda_actual<5:
             form = ContainerForm(request.form)
             print("Contenedor 1: ",form.containerOne.data)
             print("Contenedor 2: ",form.containerTwo.data)
@@ -215,9 +224,11 @@ def gameone():
         else:
             result_score_one = GameOneScore.query.filter_by(username=current_user.username)
             result_score_two = GameTwoScore.query.filter_by(username=current_user.username)
+            result_score_three = GameThreeScore.query.filter_by(username=current_user.username)
 
             round_total_one = GameOneScore.query.filter_by(username=current_user.username).count()
             round_total_two = GameTwoScore.query.filter_by(username=current_user.username).count()
+            round_total_three = GameThreeScore.query.filter_by(username=current_user.username).count()
 
             score_total_one = 0
             for r in result_score_one:
@@ -227,7 +238,13 @@ def gameone():
             for r in result_score_two:
                 score_total_two += r.score
 
-            return render_template('user_home.html',result_score_one = result_score_one,result_score_two = result_score_two,score_total_one=score_total_one,score_total_two=score_total_two,round_total_one=round_total_one,round_total_two=round_total_two)
+            score_total_three = 0
+            for r in result_score_three:
+                score_total_three += r.score
+
+            return render_template('user_home.html',result_score_one = result_score_one,result_score_two = result_score_two,result_score_three = result_score_three,
+                                                    score_total_one = score_total_one, score_total_two = score_total_two, score_total_three = score_total_three,
+                                                    round_total_one = round_total_one, round_total_two = round_total_two, round_total_three = round_total_three)
 
     return render_template('game_one.html')
 
@@ -242,7 +259,7 @@ def gametwo():
     if request.method == "POST":
         # Ronda actual
 
-        if ronda_actual<6:
+        if ronda_actual<5:
             form = ContainerForm(request.form)
             print("Contenedor 1: ",form.containerOne.data)
             print("Contenedor 2: ",form.containerTwo.data)
@@ -311,9 +328,11 @@ def gametwo():
         else:
             result_score_one = GameOneScore.query.filter_by(username=current_user.username)
             result_score_two = GameTwoScore.query.filter_by(username=current_user.username)
+            result_score_three = GameThreeScore.query.filter_by(username=current_user.username)
 
             round_total_one = GameOneScore.query.filter_by(username=current_user.username).count()
             round_total_two = GameTwoScore.query.filter_by(username=current_user.username).count()
+            round_total_three = GameThreeScore.query.filter_by(username=current_user.username).count()
 
             score_total_one = 0
             for r in result_score_one:
@@ -323,9 +342,119 @@ def gametwo():
             for r in result_score_two:
                 score_total_two += r.score
 
-            return render_template('user_home.html',result_score_one = result_score_one,result_score_two = result_score_two,score_total_one=score_total_one,score_total_two=score_total_two,round_total_one=round_total_one,round_total_two=round_total_two)
+            score_total_three = 0
+            for r in result_score_three:
+                score_total_three += r.score
+
+            return render_template('user_home.html',result_score_one = result_score_one,result_score_two = result_score_two,result_score_three = result_score_three,
+                                                    score_total_one = score_total_one, score_total_two = score_total_two, score_total_three = score_total_three,
+                                                    round_total_one = round_total_one, round_total_two = round_total_two, round_total_three = round_total_three)
 
     return render_template('game_two.html')
+
+
+# Esta función acepta las solicitudes web
+@app.route('/gamethree',methods=["GET","POST"])
+def gamethree():
+    contenedores_nombres = {'containerOne':1,'containerTwo':2,'containerThree':3,'containerFour':4,'containerFive':5,'containerSix':6}
+    bolitas_nombres = {1:"Red",2:"Blue",3:"Green"}
+    ronda_actual = GameThreeRound.query.filter_by(username=current_user.username).count()
+
+    if request.method == "POST":
+        # Ronda actual
+
+        if ronda_actual<5:
+            form = ContainerForm(request.form)
+            print("Contenedor 1: ",form.containerOne.data)
+            print("Contenedor 2: ",form.containerTwo.data)
+            print("Contenedor 3: ",form.containerThree.data)
+            print("Contenedor 4: ",form.containerFour.data)
+            print("Contenedor 5: ",form.containerFive.data)
+            print("Contenedor 6: ",form.containerSix.data)
+
+
+            contenedores = [form.containerOne,form.containerTwo,form.containerThree,form.containerFour,form.containerFive,form.containerSix]
+
+            rand_contenedor = random.choice(contenedores)
+
+            print("El contenedor aleatorio {} con valor {}".format(rand_contenedor.name,rand_contenedor.data))
+
+            recompensa,bolita_random = get_bolita_contenedor(rand_contenedor.name,rand_contenedor.data,"dos")
+            bolita_random = bolitas_nombres[bolita_random]
+            contenedor_random=contenedores_nombres[rand_contenedor.name]
+            bolita_elegida=bolitas_nombres[int(rand_contenedor.data)]
+            print("Contenedor {}".format(contenedor_random))
+            print("Bola elegida {}".format(bolita_elegida))
+            print("El usuario actual es {}".format(current_user.username))
+
+            ### Generamos los insert
+            # Ronda actual
+            ronda_actual = GameThreeRound.query.filter_by(username=current_user.username).count()
+            ronda_actual += 1
+            ronda_actual_insert = GameThreeRound(current_user.username, ronda_actual)
+            db.session.add(ronda_actual_insert)
+            db.session.commit()
+
+            # Seleccion del juego
+            for contenedor in contenedores:
+                name_container = contenedores_nombres[contenedor.name]
+                contenedor_insert = GameThreeSelection(current_user.username,ronda_actual,name_container,contenedor.data)
+                db.session.add(contenedor_insert)
+                db.session.commit()
+
+            # Resultado del contenedor seleccionado
+            name_container_score = rand_contenedor.name
+            bola_elegida_score = int(rand_contenedor.data)
+            print("#######################")
+            print(current_user.username)
+            print(ronda_actual)
+            print(name_container_score)
+            print(bola_elegida_score)
+            print(recompensa)
+
+            contenedor_score_insert = GameThreeScore(current_user.username,
+                                        ronda_actual,
+                                        name_container_score,
+                                        bola_elegida_score,
+                                        recompensa)
+
+            db.session.add(contenedor_score_insert)
+            db.session.commit()
+
+            # Calculamos el score total
+            result_score = GameThreeScore.query.filter_by(username=current_user.username)
+
+            score_total = 0
+            for r in result_score:
+                score_total += r.score
+
+            return render_template('game_three.html', contenedor_random=contenedor_random , bolita_elegida = bolita_elegida,bolita_random=bolita_random , recompensa=recompensa,score_total=score_total,ronda=ronda_actual)
+        else:
+            result_score_one = GameOneScore.query.filter_by(username=current_user.username)
+            result_score_two = GameTwoScore.query.filter_by(username=current_user.username)
+            result_score_three = GameThreeScore.query.filter_by(username=current_user.username)
+
+            round_total_one = GameOneScore.query.filter_by(username=current_user.username).count()
+            round_total_two = GameTwoScore.query.filter_by(username=current_user.username).count()
+            round_total_three = GameThreeScore.query.filter_by(username=current_user.username).count()
+
+            score_total_one = 0
+            for r in result_score_one:
+                score_total_one += r.score
+
+            score_total_two = 0
+            for r in result_score_two:
+                score_total_two += r.score
+
+            score_total_three = 0
+            for r in result_score_three:
+                score_total_three += r.score
+
+            return render_template('user_home.html',result_score_one = result_score_one,result_score_two = result_score_two,result_score_three = result_score_three,
+                                                    score_total_one = score_total_one, score_total_two = score_total_two, score_total_three = score_total_three,
+                                                    round_total_one = round_total_one, round_total_two = round_total_two, round_total_three = round_total_three)
+
+    return render_template('game_three.html')
 
 @app.route('/results')
 def results():
